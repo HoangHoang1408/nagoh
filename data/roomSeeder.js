@@ -148,8 +148,12 @@ const rooms = [
     roomCleaning: false,
     images: [
       {
-        public_id: "bookit/rooms/9_konrjf",
-        url: "https://res.cloudinary.com/bookit/image/upload/v1618590849/bookit/rooms/9_konrjf.jpg",
+        public_id: "bookit/rooms/8_crn0xy",
+        url: "https://res.cloudinary.com/bookit/image/upload/v1618590765/bookit/rooms/8_crn0xy.jpg",
+      },
+      {
+        public_id: "bookit/rooms/2_s1u52n",
+        url: "https://res.cloudinary.com/bookit/image/upload/v1618590761/bookit/rooms/2_s1u52n.jpg",
       },
     ],
     category: "Single",
@@ -169,8 +173,12 @@ const rooms = [
     roomCleaning: true,
     images: [
       {
-        public_id: "bookit/rooms/10_w8w8yi",
-        url: "https://res.cloudinary.com/bookit/image/upload/v1618590840/bookit/rooms/10_w8w8yi.jpg",
+        public_id: "bookit/rooms/1_bzynlv",
+        url: "https://res.cloudinary.com/bookit/image/upload/v1618590762/bookit/rooms/1_bzynlv.jpg",
+      },
+      {
+        public_id: "bookit/rooms/2_s1u52n",
+        url: "https://res.cloudinary.com/bookit/image/upload/v1618590761/bookit/rooms/2_s1u52n.jpg",
       },
     ],
     category: "Single",

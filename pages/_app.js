@@ -1,12 +1,16 @@
 import "tailwindcss/tailwind.css";
 import Layout from "../components/layout/Layout";
+import { wrapper } from "../redux/store";
+import { Provider } from "next-auth/client";
 
 function MyApp({ Component, pageProps }) {
   return (
     <Layout>
-      <Component {...pageProps} />
+      <Provider session={pageProps.session}>
+        <Component {...pageProps} />
+      </Provider>
     </Layout>
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

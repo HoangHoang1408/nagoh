@@ -11,9 +11,11 @@ export const getAllRooms = catchAsync(async (req, res, next) => {
     .search()
     .filter()
     .count().query;
-  const apiFeatures = new APIFeatures(Room.find(), req.query).search().filter();
+  const apiFeatures = new APIFeatures(Room.find(), req.query)
+    .search()
+    .filter()
+    .paginate(resPerPage);
   const rooms = await apiFeatures.query;
-
   res.status(200).json({
     success: true,
     roomsCount,
@@ -61,4 +63,13 @@ export const deleteRoom = catchAsync(async (req, res, next) => {
   if (!room) return next(new ErrorHandler("No room found with that id!", 400));
   room.remove();
   res.status(204).send();
+});
+
+export const textSearchRooms = catchAsync(async (req, res, next) => {
+  console.log(req.body.text, "hello");
+  const rooms = await Room.find({ $text: { $search: req.body.text } });
+  res.status(200).json({
+    success: true,
+    rooms,
+  });
 });

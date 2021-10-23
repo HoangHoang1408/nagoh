@@ -1,15 +1,14 @@
-import { Fragment } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import Head from "next/head";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function Layout({ children, title = "BookIT" }) {
   return (
-    <div className=" font-urbanist">
+    <div className="font-urbanist bg-gray-100">
       <Head>
         <title>BookIT</title>
-        <meta charset="UTF-8"></meta>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge"></meta>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
@@ -20,11 +19,17 @@ function Layout({ children, title = "BookIT" }) {
         ></link>
         <script
           src="https://kit.fontawesome.com/0d42d6a5fe.js"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         ></script>
       </Head>
       <Header></Header>
-      <div>{children}</div>
+      <ToastContainer
+        autoClose={4000}
+        hideProgressBar
+        theme="colored"
+        position="bottom-right"
+      ></ToastContainer>
+      <div className="min-h-screen">{children}</div>
       <Footer></Footer>
     </div>
   );

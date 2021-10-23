@@ -1,3 +1,4 @@
+const plugin = require("tailwindcss/plugin");
 module.exports = {
   mode: "jit",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
@@ -15,5 +16,23 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      const newUtilities = {
+        ".no-scrollbar::-webkit-scrollbar": {
+          display: "none",
+        },
+        ".no-scrollbar": {
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
+        },
+
+        ".skew-15deg": {
+          transform: "skewY(-15deg)",
+        },
+      };
+
+      addUtilities(newUtilities);
+    }),
+  ],
 };
