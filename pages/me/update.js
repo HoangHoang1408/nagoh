@@ -200,7 +200,7 @@ function UpdateProfileForm() {
                 layout="fill"
                 objectFit="cover"
                 objectPosition="center"
-                quality={40}
+                quality={25}
               ></Image>
             </div>
             <label

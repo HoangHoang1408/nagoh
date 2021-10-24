@@ -260,7 +260,7 @@ function AdminRoomPage() {
                   objectFit="cover"
                   objectPosition="center"
                   src={image}
-                  quality={50}
+                  quality={25}
                 ></Image>
               </div>
             ))}

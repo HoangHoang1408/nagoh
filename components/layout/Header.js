@@ -90,7 +90,7 @@ function Header() {
                   src={user.avatar.avatarUrl}
                   blurDataURL={user.avatar.avatarUrl}
                   placeholder="blur"
-                  quality={40}
+                  quality={25}
                 ></Image>
               </div>
               <h3 className="text-lg font-semibold text-primary">

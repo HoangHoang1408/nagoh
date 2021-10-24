@@ -102,7 +102,7 @@ function BookingDetailsPage() {
                   objectFit="cover"
                   objectPosition="center"
                   src={booking.room.images[0].url}
-                  quality={40}
+                  quality={25}
                 ></Image>
               </div>
               <h3

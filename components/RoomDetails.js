@@ -96,7 +96,7 @@ const MainImages = ({ src }) => {
           layout="fill"
           objectFit="cover"
           objectPosition="center"
-          quality={50}
+          quality={25}
           placeholder="blur"
           blurDataURL={props.src}
         ></Image>
@@ -378,7 +378,7 @@ const OtherUserReviews = ({ review }) => {
               src={user.avatar.avatarUrl}
               layout="fill"
               objectFit="cover"
-              quality={50}
+              quality={25}
             ></Image>
           </div>
           <div className="text-sm text-primary font-semibold w-max">
@@ -469,7 +469,7 @@ const UserHandleFormBox = ({ user, predata, loading, setEditMode }) => {
               placeholder="blur"
               layout="fill"
               objectFit="cover"
-              quality={50}
+              quality={25}
             ></Image>
           </div>
           <div className="text-sm text-primary font-semibold w-max">
@@ -577,7 +577,7 @@ const UserReviewBox = ({ userReview, user, setEditMode, setUserReview }) => {
               placeholder="blur"
               layout="fill"
               objectFit="cover"
-              quality={50}
+              quality={25}
             ></Image>
           </div>
           <div className="text-sm text-primary font-semibold w-max">

@@ -25,7 +25,7 @@ function RoomCard({ room }) {
           src={room.images[0].url}
           blurDataURL={room.images[0].url}
           placeholder="blur"
-          quality={20}
+          quality={25}
         ></Image>
       </div>
       <h2 className="px-3 text-gray-800 text-lg font-bold h-20 mt-2">

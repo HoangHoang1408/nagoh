@@ -76,7 +76,7 @@ function BookingDetailsPage() {
                   objectFit="cover"
                   objectPosition="center"
                   src={booking.room.images[0].url}
-                  quality={40}
+                  quality={25}
                 ></Image>
               </div>
               <h3 className="cursor-pointer hover:underline font-bold text-blue-600 text-lg">
