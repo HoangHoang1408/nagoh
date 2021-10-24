@@ -172,7 +172,7 @@ function Header() {
     useEffect(() => {
       const timer = setTimeout(() => {
         dispatch(searchRooms(searchText.trim()));
-      }, 800);
+      }, 1000);
       return () => clearTimeout(timer);
     }, [searchText]);
     useEffect(() => {
@@ -195,7 +195,6 @@ function Header() {
           </label>
           <input
             onFocus={() => setToggleSearchResults(true)}
-            onBlur={() => setToggleSearchResults(false)}
             onChange={(e) => setSearchText(e.target.value)}
             value={searchText}
             className="bg-transparent outline-none border-none w-24 text-sm sm:text-base sm:w-56 md:w-72 lg:w-96 font-semibold"
@@ -203,40 +202,47 @@ function Header() {
           ></input>
         </div>
         {toggleSearchResults && (
-          <div className="z-50 absolute top-[3.25rem] left-1/2 transform -translate-x-1/2 bg-white shadow-md rounded-md w-[130%] flex flex-col max-h-[26rem] overflow-y-scroll no-scrollbar min-h-0">
-            {rooms.map((room) => (
-              <div
-                onClick={() => router.push(`room/${room._id}`)}
-                className="text-primary font-semibold cursor-pointer bg-gray-200 hover:bg-gray-300 transition-all rounded-md m-1"
-              >
-                <div className="flex space-x-4 p-1">
-                  <div className="relative w-24 h-16 ">
-                    <Image
-                      objectFit="cover"
-                      objectPosition="center"
-                      className="rounded-md"
-                      layout="fill"
-                      src={room.images[0].url}
-                      placeholder="blur"
-                      blurDataURL={room.images[0].url}
-                    ></Image>
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <h3>{room.name}</h3>
-                    <h3 className="text-xs ">{room.address}</h3>
-                    <h3 className="text-xs">
-                      Price:{" "}
-                      <span className="font-bold">{room.pricePerNight}$</span>{" "}
-                      with <span className="font-bold">{room.ratings}</span>{" "}
-                      stars rating (
-                      <span className="font-bold">{room.numOfReviews}</span>{" "}
-                      reviews)
-                    </h3>
+          <Fragment>
+            <div
+              onClick={() => setToggleSearchResults(false)}
+              className="fixed top-0 left-0 w-full h-screen bg-transparent"
+            ></div>
+            <div className="z-50 absolute top-[3.25rem] left-1/2 transform -translate-x-1/2 bg-white shadow-md rounded-md w-[130%] flex flex-col max-h-[26rem] overflow-y-scroll no-scrollbar min-h-0">
+              {rooms.map((room) => (
+                <div
+                  key={room._id}
+                  onClick={() => router.push(`/room/${room._id}`)}
+                  className="text-primary font-semibold cursor-pointer bg-gray-200 hover:bg-gray-300 transition-all rounded-md m-1"
+                >
+                  <div className="flex space-x-4 p-1">
+                    <div className="relative w-24 h-16 ">
+                      <Image
+                        objectFit="cover"
+                        objectPosition="center"
+                        className="rounded-md"
+                        layout="fill"
+                        src={room.images[0].url}
+                        placeholder="blur"
+                        blurDataURL={room.images[0].url}
+                      ></Image>
+                    </div>
+                    <div className="flex flex-col justify-center">
+                      <h3>{room.name}</h3>
+                      <h3 className="text-xs ">{room.address}</h3>
+                      <h3 className="text-xs">
+                        Price:{" "}
+                        <span className="font-bold">{room.pricePerNight}$</span>{" "}
+                        with <span className="font-bold">{room.ratings}</span>{" "}
+                        stars rating (
+                        <span className="font-bold">{room.numOfReviews}</span>{" "}
+                        reviews)
+                      </h3>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </Fragment>
         )}
       </div>
     );

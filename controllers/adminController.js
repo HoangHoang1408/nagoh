@@ -23,7 +23,6 @@ export const getAdminRoom = catchAsync(async (req, res, next) => {
   });
 });
 export const updateAdminRoom = catchAsync(async (req, res, next) => {
-  console.log(req.files, req.body);
   if (req.files.length > 0)
     req.body["images"] = await Promise.all(
       req.files.map((file) => uploadToStorageRoomImage("roomImages", file))
@@ -87,7 +86,26 @@ export const adminDeleteBooking = catchAsync(async (req, res, next) => {
   });
 });
 export const adminDeleteReview = catchAsync(async (req, res, next) => {
-  await Review.findByIdAndDelete(req.query.id);
+  const review = await Review.findByIdAndDelete(req.query.id);
+  const stats = await Review.aggregate([
+    { $match: { room: mongoose.Types.ObjectId(review.room) } },
+    {
+      $group: {
+        _id: null,
+        numOfReviews: { $sum: 1 },
+        ratingAvg: { $avg: "$rating" },
+      },
+    },
+  ]);
+  const room = await Room.findById(review.room);
+  if (stats.length === 0) {
+    room.ratings = 5;
+    room.numOfReviews = 0;
+  } else {
+    room.ratings = stats[0].ratingAvg;
+    room.numOfReviews = stats[0].numOfReviews;
+  }
+  await room.save();
   res.status(200).json({
     success: true,
   });

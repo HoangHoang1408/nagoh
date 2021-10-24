@@ -73,7 +73,7 @@ export const updatePassword = catchAsync(async (req, res, next) => {
   if (!match)
     return next(new ErrorHandler("Current password is not correct!", 400));
   user.password = newPassword;
-  await user.save();
+  await user.save({});
   res.status(200).json({
     success: true,
   });

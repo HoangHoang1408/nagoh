@@ -581,7 +581,7 @@ const UserReviewBox = ({ userReview, user, setEditMode, setUserReview }) => {
     </div>
   );
 };
-const UserReview = ({ userReview: data, user }) => {
+const UserReview = ({ userReview: data, user, roomId }) => {
   const [userReview, setUserReview] = useState(null);
   useEffect(() => {
     if (data) setUserReview(data);
@@ -605,7 +605,8 @@ const UserReview = ({ userReview: data, user }) => {
     if (updateReview) setUserReview(updateReview);
   }, [updateReview]);
   useEffect(() => {
-    if (createReview) setUserReview(createReview);
+    if (createReview && roomId === createReview.room)
+      setUserReview(createReview);
   }, [createReview]);
   if (editMode)
     return (
@@ -616,7 +617,7 @@ const UserReview = ({ userReview: data, user }) => {
         predata={userReview}
       ></UserHandleFormBox>
     );
-  if (userReview)
+  if (userReview && userReview.room === roomId)
     return (
       <UserReviewBox
         userReview={userReview}
@@ -641,12 +642,12 @@ const Reviews = ({ room }) => {
   useEffect(() => {
     dispatch(getRoomReviews(router.query.id, 0));
   }, [dispatch]);
+  const [reviews, setReviews] = useState([]);
   useEffect(() => {
     if (error)
       return toast.error("Can't load comments right now please try later!");
     if (data) setReviews((pre) => pre.concat(data.reviews));
   }, [data, error]);
-  const [reviews, setReviews] = useState([]);
   function handleLoadMoreReviews() {
     dispatch(getRoomReviews(router.query.id, reviews.length));
   }
@@ -659,7 +660,11 @@ const Reviews = ({ room }) => {
         <div className="flex flex-col space-y-5">
           {/* add comment */}
           {user && (
-            <UserReview userReview={data?.userReview} user={user}></UserReview>
+            <UserReview
+              userReview={data?.userReview}
+              user={user}
+              roomId={room._id}
+            ></UserReview>
           )}
           {/* users comments */}
           {reviews?.map((e) => (

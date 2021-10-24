@@ -94,6 +94,7 @@ function Home() {
   return (
     <div className="pt-10 min-h-screen bg-gray-100">
       <div className="w-full px-5 sm:px-10 md:px-20 lg:px-28">
+        <h3 className="text-3xl font-bold text-primary">Select your room</h3>
         {/* Cards container */}
         <div className="grid gap-5 grid-cols-12 mt-8 ">
           {roomCards}

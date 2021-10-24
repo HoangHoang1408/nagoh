@@ -89,7 +89,6 @@ export const getAllBookings = catchAsync(async (req, res, next) => {
   });
 });
 export const getBookingDetails = catchAsync(async (req, res, next) => {
-  console.log("hello", req.query.id);
   const booking = await Booking.findById(req.query.id)
     .populate({
       path: "room",

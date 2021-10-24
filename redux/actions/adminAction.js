@@ -177,7 +177,6 @@ export const adminGetBooking = (bookingId) => async (dispatch) => {
       type: ADMIN_GET_BOOKING_REQUEST,
     });
     const { data } = await axios.get(`/api/admin/bookings/${bookingId}`);
-    console.log(data);
     dispatch({
       type: ADMIN_GET_BOOKING_SUCCESS,
       payload: data.booking,

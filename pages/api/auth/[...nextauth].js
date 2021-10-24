@@ -28,6 +28,7 @@ export default NextAuth({
           name: user.name,
           avatar: user.avatar,
           role: user.role,
+          email: user.email,
         });
       },
     }),

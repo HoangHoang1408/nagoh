@@ -9,6 +9,8 @@ module.exports = {
     SMTP_FROM_NAME: "BookIT",
     SMTP_FROM_EMAIL: "noreply@bookit.com",
     NUMBER_OF_REVIEWS_DISPLAYED_ON_ROOM_PAGE: 6,
+    STRIPE_SECRET_KEY:
+      "sk_test_51JQP7pJh69crEUmAVZhREq54Dfxnt3P6N24Lsxpl2U9qtQEma9xFxJcFJIwP7P9cXCloup6Yx1R6IBs8D99UGDre00d8tslE8F",
   },
   images: {
     domains: ["res.cloudinary.com", "firebasestorage.googleapis.com"],

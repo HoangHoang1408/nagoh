@@ -75,7 +75,6 @@ function CreateRoomPage() {
       return toast.error("Images about the room are required!");
     const formData = new FormData();
     Object.keys(formFields).forEach((key) => {
-      console.log(formFields[key]);
       formData.append(key, formFields[key]);
     });
     Array.from(images).forEach((file) => formData.append("images", file));

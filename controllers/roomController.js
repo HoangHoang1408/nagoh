@@ -66,7 +66,6 @@ export const deleteRoom = catchAsync(async (req, res, next) => {
 });
 
 export const textSearchRooms = catchAsync(async (req, res, next) => {
-  console.log(req.body.text, "hello");
   const rooms = await Room.find({ $text: { $search: req.body.text } });
   res.status(200).json({
     success: true,
