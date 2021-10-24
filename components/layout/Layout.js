@@ -3,11 +3,11 @@ import Header from "./Header";
 import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-function Layout({ children, title = "BookIT" }) {
+function Layout({ children }) {
   return (
     <div className="font-urbanist bg-gray-100">
       <Head>
-        <title>BookIT</title>
+        <title>Nagoh</title>
         <meta httpEquiv="X-UA-Compatible" content="IE=edge"></meta>
         <meta
           name="viewport"
