@@ -184,11 +184,14 @@ function AdminUserPage() {
       )}
       <div className="w-3/4 mx-auto my-8 relative">
         <div className="mb-4 flex justify-between items-center space-x-3  text-primary">
+          <div>
+            <h3 className="text-2xl font-bold">All Users</h3>
+          </div>
           <div className="flex space-x-3">
             <h3 className="text-2xl font-bold">Search</h3>
             <input
               onChange={(e) => setSearchField(e.target.value)}
-              className="border-2 border-primary outline-none px-2 py-1"
+              className="border-2 border-primary outline-none px-2 py-1 rounded"
             ></input>
           </div>
         </div>

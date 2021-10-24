@@ -159,7 +159,7 @@ function MyBookingPages() {
             >
               {headerGroup.headers.map((column) => (
                 <th
-                  className="select-none px-2 py-1 border-primary border-[1px] text-center"
+                  className="select-none px-2 py-1 shadow-md text-center"
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                 >
                   {column.render("Header")}
@@ -185,7 +185,7 @@ function MyBookingPages() {
               >
                 {row.cells.map((cell) => (
                   <td
-                    className="px-3 py-2 border-primary border-[1px] text-center"
+                    className="px-3 py-2 shadow-md text-center "
                     {...cell.getCellProps()}
                   >
                     {cell.render("Cell")}

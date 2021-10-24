@@ -18,7 +18,7 @@ function Header() {
       <div>
         <Link href="/">
           <img
-            src="/images/bookit_logo.png"
+            src="/images/nagoh.png"
             className="cursor-pointer w-20 md:w-32"
           ></img>
         </Link>
@@ -27,7 +27,12 @@ function Header() {
   }
 
   const router = useRouter();
-  if (router.pathname === "/login")
+  const path = router.pathname;
+  if (
+    path.includes("/login") ||
+    path.includes("/register") ||
+    path.includes("/password")
+  )
     return (
       <div className="sticky top-0 left-0 w-full h-14 flex justify-between items-center bg-white shadow-md px-10 z-50">
         <LeftPart></LeftPart>
@@ -36,10 +41,11 @@ function Header() {
   const [userOption, setUserOption] = useState(false);
 
   const dispatch = useDispatch();
+
   const { user, loading } = useSelector((state) => state.auth);
   useEffect(() => {
     if (!user) dispatch(loadUser());
-  }, [dispatch, user]);
+  }, [user]);
 
   async function signOutHandler() {
     await signOut();
@@ -61,16 +67,21 @@ function Header() {
 
   function RightPart() {
     return (
-      <Fragment>
+      <div className="w-32 flex justify-center">
+        {loading && (
+          <div className="w-max">
+            <img className="w-6 h-6" src="/images/loading.svg"></img>
+          </div>
+        )}
         {user && !loading && (
-          <div className="relative">
+          <div className="relative w-max">
             <div
               onClick={() => {
                 setUserOption((pre) => !pre);
               }}
-              className="flex items-center space-x-2 bg-gray-50 border-[1px] border-gray-200 hover:bg-gray-100 hover:border-primary transform shadow-md py-1 px-2  rounded-full  cursor-pointer"
+              className="flex items-center space-x-2 bg-gray-50 border-[1px] border-gray-300 hover:bg-gray-100 hover:border-primary transform shadow-md py-1 pl-2 pr-3  rounded-full  cursor-pointer"
             >
-              <div className="w-10 h-10 relative rounded-full">
+              <div className="w-9 h-9 relative rounded-full">
                 <Image
                   className="rounded-full border-2 border-white"
                   layout="fill"
@@ -160,7 +171,7 @@ function Header() {
           </div>
         )}
         {!user && !loading && <Button href="/login">Login</Button>}
-      </Fragment>
+      </div>
     );
   }
   function SearchPart() {
@@ -172,7 +183,7 @@ function Header() {
     useEffect(() => {
       const timer = setTimeout(() => {
         dispatch(searchRooms(searchText.trim()));
-      }, 1000);
+      }, 800);
       return () => clearTimeout(timer);
     }, [searchText]);
     useEffect(() => {
@@ -180,7 +191,7 @@ function Header() {
     }, [error]);
     return (
       <div className="relative">
-        <div className="bg-gray-200 text-primary font-semibold flex space-x-2 items-center shadow rounded-lg">
+        <div className="bg-gray-200 hover:bg-gray-300 text-primary font-semibold flex space-x-2 items-center shadow-md rounded-lg">
           <label
             className="flex space-x-1 items-center bg-primary text-white h-full py-2 pl-3 pr-2 rounded-l-lg"
             htmlFor="search_room"
@@ -197,7 +208,7 @@ function Header() {
             onFocus={() => setToggleSearchResults(true)}
             onChange={(e) => setSearchText(e.target.value)}
             value={searchText}
-            className="bg-transparent outline-none border-none w-24 text-sm sm:text-base sm:w-56 md:w-72 lg:w-96 font-semibold"
+            className="bg-transparent outline-none border-none w-24 text-sm sm:text-base sm:w-56 md:w-72 lg:w-96 font-semibold h-full"
             id="search_room"
           ></input>
         </div>

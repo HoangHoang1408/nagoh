@@ -19,6 +19,7 @@ import {
   bookingDetailsReducer,
   checkBookingReducer,
 } from "./bookingReducer";
+import { getCheckoutReducer } from "./paymentReducer";
 import {
   createReviewReducer,
   deleteReviewReducer,
@@ -30,6 +31,7 @@ import { searchRoomsReducer } from "./searchReducer";
 import {
   authReducer,
   forgotPasswordReducer,
+  registerReducer,
   resetPasswordReducer,
   userReducer,
 } from "./userReducer";
@@ -41,6 +43,7 @@ const reducers = combineReducers({
   roomDetails: roomDetailsReducer,
   auth: authReducer,
   user: userReducer,
+  register: registerReducer,
   forgotPassword: forgotPasswordReducer,
   resetPassword: resetPasswordReducer,
   checkBooking: checkBookingReducer,
@@ -64,5 +67,6 @@ const reducers = combineReducers({
   adminGetUsers: adminGetUsersReducer,
   adminDeleteUser: adminDeleteUserReducer,
   searchRooms: searchRoomsReducer,
+  getStripeCheckout: getCheckoutReducer,
 });
 export default reducers;

@@ -22,7 +22,6 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
 import { useRouter } from "next/dist/client/router";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { checkBooking, getBookedDates } from "../redux/actions/bookingAction";
 import Link from "next/link";
 import {
@@ -31,6 +30,9 @@ import {
   getRoomReviews,
   updateReview,
 } from "../redux/actions/reviewAction";
+import { getStripeCheckout } from "../redux/actions/paymentAction";
+import { GET_CHECKOUT_RESET } from "../redux/constants/paymentConstants";
+import { getStripe } from "../utils/getStripe";
 
 const HeadPage = ({ roomData }) => {
   const roundedRatings = Math.round(2 * roomData.ratings) / 2;
@@ -184,13 +186,34 @@ const DateTime = ({ state, setState, roomId }) => {
     </div>
   );
 };
-const FeatureAndPayment = ({ room, handler }) => {
+const FeatureAndPayment = ({ room, handler, daysOfStay }) => {
+  const dispatch = useDispatch();
   const { loading, isAvailable, error, message } = useSelector(
     (state) => state.checkBooking
   );
+  const {
+    loading: stripeLoading,
+    error: stripeError,
+    session,
+  } = useSelector((state) => state.getStripeCheckout);
 
   const user = useSelector((state) => state.auth.user);
 
+  useEffect(async () => {
+    if (stripeError) {
+      toast.error(stripeError);
+      dispatch({
+        type: GET_CHECKOUT_RESET,
+      });
+    }
+    if (session) {
+      const stripe = await getStripe();
+      stripe.redirectToCheckout({ sessionId: session.id });
+      dispatch({
+        type: GET_CHECKOUT_RESET,
+      });
+    }
+  }, [stripeError, session]);
   const {
     pricePerNight,
     guestCapacity,
@@ -303,16 +326,23 @@ const FeatureAndPayment = ({ room, handler }) => {
           <h3 className="text-xl pt-4 pl-1 mb-4 mx-3 border-t-2 border-primary font-semibold">
             Total:{" "}
             <span className="inline-block text-primary font-bold">
+              {+daysOfStay * +pricePerNight}$
+            </span>{" "}
+            with{" "}
+            <span className="inline-block text-primary font-bold">
               {pricePerNight}$
             </span>{" "}
             / night
           </h3>
           <button
-            disabled={loading || !isAvailable || !user}
+            disabled={loading || !isAvailable || !user || stripeLoading}
             onClick={handler}
             className="w-full grid place-items-center bg-primary h-14 text-white text-xl hover:text-2xl font-bold cursor-pointer"
           >
-            {user && <h3 className="">Pay</h3>}
+            {user && !stripeLoading && <h3 className="">Pay</h3>}
+            {stripeLoading && (
+              <img className="w-8 h-8" src="/images/loading.svg"></img>
+            )}
             {!user && (
               <Link href="/login">
                 <h3>Login to booking</h3>
@@ -683,8 +713,9 @@ const Reviews = ({ room }) => {
 
 // main
 function RoomDetails() {
-  const router = useRouter();
+  const dispatch = useDispatch();
   const { room } = useSelector((state) => state.roomDetails);
+
   const [selectedDates, setSelectedDates] = useState([
     {
       startDate: new Date(),
@@ -692,31 +723,21 @@ function RoomDetails() {
       key: "selection",
     },
   ]);
-  const newBookingHandler = async () => {
+  const daysOfStay = Math.ceil(
+    (new Date(selectedDates[0].endDate) -
+      new Date(selectedDates[0].startDate)) /
+      86400000
+  );
+  const newBookingHandler = () => {
     const checkInDate = selectedDates[0].startDate;
     const checkOutDate = selectedDates[0].endDate;
-    const daysOfStay = Math.ceil(
-      (new Date(checkOutDate) - new Date(checkInDate)) / 86400000
+    dispatch(
+      getStripeCheckout({
+        checkInDate,
+        checkOutDate,
+        roomId: room._id,
+      })
     );
-    if (daysOfStay <= 0)
-      return toast.error("Please select correct checkin and checkout date");
-    const bookingData = {
-      room: router.query.id,
-      checkInDate,
-      checkOutDate,
-      daysOfStay,
-      amountPaid: 90,
-      paymentInfo: {
-        id: "PAYMENT_ID",
-        status: "PAYMENT_STATUS",
-      },
-    };
-    try {
-      const { data } = await axios.post("/api/bookings", bookingData);
-      toast.success("Booking Success!");
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
   };
   return (
     <div className="pt-4  px-6 sm:px-10 md:px-10 lg:px-32">
@@ -731,6 +752,7 @@ function RoomDetails() {
         <FeatureAndPayment
           handler={newBookingHandler}
           room={room}
+          daysOfStay={daysOfStay}
         ></FeatureAndPayment>
         <Description description={room.description}></Description>
         <Reviews room={room}></Reviews>

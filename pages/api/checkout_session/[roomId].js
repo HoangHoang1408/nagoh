@@ -8,6 +8,6 @@ const handler = nextConnect({ onError: globalErrorHandler });
 
 dbConnect();
 
-handler.use(isAuthenticated).get(stripeCheckoutSession);
+handler.use(isAuthenticated).post(stripeCheckoutSession);
 
 export default handler;

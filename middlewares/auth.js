@@ -4,7 +4,7 @@ import ErrorHandler from "../utils/errorHandler";
 export const isAuthenticated = catchAsync(async (req, res, next) => {
   const session = await getSession({ req });
   if (!session)
-    return next(new ErrorHandler("Login first to access this resource", 400));
+    return next(new ErrorHandler("Login first to access this resource!", 400));
   req.user = session.user;
   next();
 });

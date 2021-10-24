@@ -8,6 +8,7 @@ import {
   registerUser,
   resetState,
 } from "../redux/actions/userActions";
+import { REGISTER_USER_RESET } from "../redux/constants/userConstants";
 
 function RegisterPage() {
   const dispatch = useDispatch();
@@ -22,18 +23,21 @@ function RegisterPage() {
   const [image, setImage] = useState("/images/user.png");
   const [file, setFile] = useState(null);
   const { registerSuccess, error, loading } = useSelector(
-    (state) => state.auth
+    (state) => state.register
   );
-
   useEffect(() => {
     if (registerSuccess) {
       toast.success("Register successfully, login to continue!");
       router.push("/login");
-      dispatch(resetState());
+      dispatch({
+        type: REGISTER_USER_RESET,
+      });
     }
     if (error) {
       toast.error(error);
-      dispatch(clearErrors());
+      dispatch({
+        type: REGISTER_USER_RESET,
+      });
     }
   }, [registerSuccess, error]);
 
