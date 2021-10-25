@@ -9,7 +9,7 @@ const sendEmail = async (options) => {
     },
   });
   const message = {
-    from: "Nagoh noreply@nagoh.com",
+    from: "Nagoh <noreply@nagoh.com>",
     to: options.email,
     subject: options.subject,
     text: options.message,

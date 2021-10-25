@@ -14,7 +14,7 @@ module.exports = {
     STRIPE_PUBLISHABLE_KEY:
       "pk_test_51JQP7pJh69crEUmADNyemipYG9RAbGNt9XyA4JZxJQH7GXJsY2dwRzxpKMBMuZJ4n4sD4pJHWhBZ4D6FXEIbUdQ300Wr1UcMPR",
     STRIPE_WEBHOOK_SECRET: "whsec_DUOfeIwWFPnY5Rs4PmdlDjajp5i4CMcU",
-    NEXTAUTH_URL: "https://nagoh.vercel.app",
+    NEXTAUTH_URL: "https://nagoh-2thutk3lk-hoang1482002-gmailcom.vercel.app",
   },
   images: {
     domains: ["res.cloudinary.com", "firebasestorage.googleapis.com"],
