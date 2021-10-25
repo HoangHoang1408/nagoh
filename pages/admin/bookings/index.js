@@ -1,61 +1,61 @@
-import { faDownload, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getSession } from "next-auth/client";
-import { useRouter } from "next/dist/client/router";
-import { Fragment, useEffect, useMemo, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { faDownload, faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getSession } from 'next-auth/client';
+import { useRouter } from 'next/dist/client/router';
+import { Fragment, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable,
-} from "react-table";
-import { toast } from "react-toastify";
+} from 'react-table';
+import { toast } from 'react-toastify';
 import {
   adminDeleteBooking,
   adminGetBookings,
-} from "../../../redux/actions/adminAction";
-import { ADMIN_DELETE_BOOKING_RESET } from "../../../redux/constants/adminConstants";
-import { downloadInvoice } from "../../../utils/downloadInvoice";
+} from '../../../redux/actions/adminAction';
+import { ADMIN_DELETE_BOOKING_RESET } from '../../../redux/constants/adminConstants';
+import { downloadInvoice } from '../../../utils/downloadInvoice';
 
 const c = [
   {
-    Header: "Booking Id",
-    accessor: "_id",
+    Header: 'Booking Id',
+    accessor: '_id',
   },
   {
-    Header: "Check In",
-    accessor: "checkInDate",
+    Header: 'Check In',
+    accessor: 'checkInDate',
     Cell: ({ value }) => {
       return (
         <h3>
-          {new Date(value).toLocaleString("en-US", {
-            month: "2-digit",
-            day: "numeric",
-            year: "numeric",
+          {new Date(value).toLocaleString('en-US', {
+            month: '2-digit',
+            day: 'numeric',
+            year: 'numeric',
           })}
         </h3>
       );
     },
   },
   {
-    Header: "Check Out",
-    accessor: "checkOutDate",
+    Header: 'Check Out',
+    accessor: 'checkOutDate',
     Cell: ({ value }) => {
       return (
         <h3>
-          {new Date(value).toLocaleString("en-US", {
-            month: "2-digit",
-            day: "numeric",
-            year: "numeric",
+          {new Date(value).toLocaleString('en-US', {
+            month: '2-digit',
+            day: 'numeric',
+            year: 'numeric',
           })}
         </h3>
       );
     },
   },
   {
-    Header: "Amount Paid",
-    accessor: "amountPaid",
+    Header: 'Amount Paid',
+    accessor: 'amountPaid',
   },
 ];
 function AdminBookingsPage() {
@@ -101,7 +101,7 @@ function AdminBookingsPage() {
         return [
           ...columns,
           {
-            Header: "Actions",
+            Header: 'Actions',
             Cell: ({ row }) => {
               return (
                 <div className="text-white flex justify-center items-center space-x-3">
@@ -155,10 +155,10 @@ function AdminBookingsPage() {
       });
       setDeleteBookingId(null);
       dispatch(adminGetBookings());
-      toast.success("Room deleted!");
+      toast.success('Booking deleted!');
     }
   }, [error, deleteError, deleteSuccess]);
-  const [searchField, setSearchField] = useState("");
+  const [searchField, setSearchField] = useState('');
   useEffect(() => {
     const timer = setTimeout(() => {
       setGlobalFilter(searchField.trim());
@@ -241,13 +241,13 @@ function AdminBookingsPage() {
                     className="select-none px-2 py-1 text-center shadow-md"
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                   >
-                    {column.render("Header")}
+                    {column.render('Header')}
                     <span>
                       {column.isSorted
                         ? column.isSortedDesc
-                          ? " 🔽"
-                          : " 🔼"
-                        : ""}
+                          ? ' 🔽'
+                          : ' 🔼'
+                        : ''}
                     </span>
                   </th>
                 ))}
@@ -261,8 +261,8 @@ function AdminBookingsPage() {
                 <tr
                   className={
                     i % 2 === 1
-                      ? "bg-primary bg-opacity-20 shadow-md"
-                      : "shadow-md"
+                      ? 'bg-primary bg-opacity-20 shadow-md'
+                      : 'shadow-md'
                   }
                   {...row.getRowProps()}
                 >
@@ -271,7 +271,7 @@ function AdminBookingsPage() {
                       className="px-3 py-2 text-center text-sm"
                       {...cell.getCellProps()}
                     >
-                      {cell.render("Cell")}
+                      {cell.render('Cell')}
                     </td>
                   ))}
                 </tr>
@@ -306,10 +306,10 @@ function AdminBookingsPage() {
 export default AdminBookingsPage;
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (!session || session.user.role !== "admin")
+  if (!session || session.user.role !== 'admin')
     return {
       redirect: {
-        destination: "/login",
+        destination: '/login',
         permanent: false,
       },
     };

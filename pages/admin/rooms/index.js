@@ -1,39 +1,39 @@
-import { useEffect, useMemo, useState, Fragment } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useMemo, useState, Fragment } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   adminDeleteRoom,
   adminRooms,
-} from "../../../redux/actions/adminAction";
+} from '../../../redux/actions/adminAction';
 import {
   useTable,
   useGlobalFilter,
   useSortBy,
   usePagination,
-} from "react-table";
-import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
-import { ADMIN_DELETE_ROOM_RESET } from "../../../redux/constants/adminConstants";
-import { getSession } from "next-auth/client";
+} from 'react-table';
+import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
+import { useRouter } from 'next/dist/client/router';
+import { ADMIN_DELETE_ROOM_RESET } from '../../../redux/constants/adminConstants';
+import { getSession } from 'next-auth/client';
 
 const c = [
   {
-    Header: "Id",
-    accessor: "_id",
+    Header: 'Id',
+    accessor: '_id',
   },
   {
-    Header: "Name",
-    accessor: "name",
+    Header: 'Name',
+    accessor: 'name',
   },
   {
-    Header: "Price",
-    accessor: "pricePerNight",
+    Header: 'Price',
+    accessor: 'pricePerNight',
   },
   {
-    Header: "Category",
-    accessor: "category",
+    Header: 'Category',
+    accessor: 'category',
   },
 ];
 //
@@ -80,7 +80,7 @@ function AdminRoomsPage() {
         return [
           ...columns,
           {
-            Header: "Actions",
+            Header: 'Actions',
             Cell: ({
               row: {
                 original: { _id },
@@ -128,11 +128,11 @@ function AdminRoomsPage() {
       });
       setDeleteRoomId(null);
       dispatch(adminRooms());
-      toast.success("Room deleted!");
+      toast.success('Room deleted!');
     }
   }, [error, deleteError, deleteSuccess]);
   //
-  const [searchField, setSearchField] = useState("");
+  const [searchField, setSearchField] = useState('');
   useEffect(() => {
     const timer = setTimeout(() => {
       setGlobalFilter(searchField.trim());
@@ -144,7 +144,7 @@ function AdminRoomsPage() {
   if (loading)
     return (
       <div className="mt-20 flex justify-center">
-        <img className="w-10 h-10" src="/images/loading.svg"></img>
+        <img className="w-40 h-40" src="/images/loading.svg"></img>
       </div>
     );
   //
@@ -199,7 +199,7 @@ function AdminRoomsPage() {
           <Link href="/admin/rooms/new">
             <button className="py-1 px-3 bg-primary rounded-md">
               <h3 className="font-bold text-white text-xl">
-                Create new Room{" "}
+                Create new Room{' '}
                 <FontAwesomeIcon
                   className="w-5 h-5 inline-block"
                   icon={faPlus}
@@ -220,13 +220,13 @@ function AdminRoomsPage() {
                     className="select-none px-2"
                     {...column.getHeaderProps(column.getSortByToggleProps())}
                   >
-                    {column.render("Header")}
+                    {column.render('Header')}
                     <span>
                       {column.isSorted
                         ? column.isSortedDesc
-                          ? " 🔽"
-                          : " 🔼"
-                        : ""}
+                          ? ' 🔽'
+                          : ' 🔼'
+                        : ''}
                     </span>
                   </th>
                 ))}
@@ -240,14 +240,14 @@ function AdminRoomsPage() {
                 <tr
                   className={
                     i % 2 === 1
-                      ? "bg-primary bg-opacity-20 shadow-md"
-                      : "shadow-md"
+                      ? 'bg-primary bg-opacity-20 shadow-md'
+                      : 'shadow-md'
                   }
                   {...row.getRowProps()}
                 >
                   {row.cells.map((cell) => (
                     <td className="px-3 py-2 text-sm" {...cell.getCellProps()}>
-                      {cell.render("Cell")}
+                      {cell.render('Cell')}
                     </td>
                   ))}
                 </tr>
@@ -282,10 +282,10 @@ function AdminRoomsPage() {
 export default AdminRoomsPage;
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (!session || session.user.role !== "admin")
+  if (!session || session.user.role !== 'admin')
     return {
       redirect: {
-        destination: "/login",
+        destination: '/login',
         permanent: false,
       },
     };
