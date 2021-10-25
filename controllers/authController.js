@@ -4,8 +4,8 @@ import catchAsync from "../middlewares/catchAsync";
 import { uploadToStorage, deleteFromStorage } from "../firebase/firebase";
 import absoluteUrl from "next-absolute-url";
 import sendEmail from "../utils/sendEmail";
-import { readFilePromisified } from "../utils/fileHandle";
 import crypto from "crypto";
+import { templateString } from "../data/emailTemplate/data";
 
 // Register User => /api/auth/register
 export const registerUser = catchAsync(async (req, res, next) => {
@@ -107,6 +107,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 });
 
 // forgot password api/password/forgot
+
 export const forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user)
@@ -121,9 +122,6 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   const resetUrl = `${origin}/password/reset/${resetToken}`;
   const message = `Your password reset URL: \n\n ${resetUrl} \n\n If you have not requested this email, please ignore it!`;
   try {
-    const templateString = await readFilePromisified(
-      "./data/emailTemplate/resetPassword.html"
-    );
     await sendEmail({
       email: user.email,
       subject: "BookIT reset password link",
