@@ -1,4 +1,4 @@
-import mongose from 'mongoose';
+import mongoose from 'mongoose';
 import catchAsync from '../middlewares/catchAsync';
 import {
   deleteFromStorage,
