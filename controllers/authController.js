@@ -13,7 +13,7 @@ export const registerUser = catchAsync(async (req, res, next) => {
   let avatar = {
     fullPath: "avatarImages/defaultAvatar.png",
     avatarUrl:
-      "https://firebasestorage.googleapis.com/v0/b/bookit-9a9e7.appspot.com/o/avatarImages%2FdefaultAvatar.png?alt=media&token=ab112023-3b25-49e6-89c9-a59879a3689a",
+      "https://firebasestorage.googleapis.com/v0/b/bookit-46dd0.appspot.com/o/avatarImages%2FdefaultAvatar.png?alt=media&token=64c674a9-d280-44e8-a9e5-1b3321120f3d",
   };
   if (req.file) avatar = await uploadToStorage("avatarImages", req.file);
   const user = await User.create({
