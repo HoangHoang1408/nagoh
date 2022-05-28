@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     DB_CONNECT_STRING:
-      "mongodb+srv://hoang:hYvrSfw8QwTZh9xq@cluster0.unoc1.mongodb.net/main?retryWrites=true&w=majority",
+      "mongodb+srv://hoang:hYvrSfw8QwTZh9xq@cluster0.unoc1.mongodb.net/?retryWrites=true&w=majority",
     SMTP_HOST: "smtp.mailtrap.io",
     SMTP_PORT: 2525,
     SMTP_USER: "clashofclansphamviethoang@gmail.com",
